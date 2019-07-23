@@ -97,11 +97,13 @@ public class case1 {
 	@When("^enters the answer for the security question as \"([^\"]*)\"$")
 	public void enters_the_answer_for_the_security_question_as(String arg1) throws Throwable {
 		driver.findElement(By.id("answer")).sendKeys(arg1);
+		driver.findElement(By.name("Submit")).click();
 	}
 
 	@Then("^Registration successfull$")
 	public void registration_successfull() throws Throwable {
-		driver.findElement(By.name("Submit")).click();
+		System.out.println("Registration Successfull");
+		driver.close();
 	}
 	
 	
@@ -121,13 +123,15 @@ public class case1 {
 	@Then("^User must be in home page$")
 	public void user_must_be_in_home_page() throws Throwable {
 		 System.out.println("Login successfull");
+		 driver.close();
 	}
 	
 //Search
 	@Given("^User is already logged in$")
 	public void user_is_already_logged_in() throws Throwable {
-		driver.findElement(By.name("userName")).sendKeys("AlexUser");
-		driver.findElement(By.name("password")).sendKeys("Alex@123");
+		driver.findElement(By.partialLinkText("SignIn")).click();
+		driver.findElement(By.name("userName")).sendKeys("Lalitha");
+		driver.findElement(By.name("password")).sendKeys("password123");
 		driver.findElement(By.name("Login")).click();
 	}
 
@@ -142,34 +146,30 @@ public class case1 {
 	@Then("^User gets all appropriate results to purchase$")
 	public void user_gets_all_appropriate_results_to_purchase() throws Throwable {
 	   System.out.println("The search engine is very fast and accurate");
+	   driver.close();
 	}
 	
 //Payment
 	@Given("^user is logged in$")
 	public void user_registered_into_TestMeApp() throws Throwable {
-		driver.findElement(By.name("userName")).sendKeys("AlexUser");
-		driver.findElement(By.name("password")).sendKeys("Alex@123");
+		driver.findElement(By.partialLinkText("SignIn")).click();
+		driver.findElement(By.name("userName")).sendKeys("Lalitha");
+		driver.findElement(By.name("password")).sendKeys("password123");
 		driver.findElement(By.name("Login")).click();
 	}
 
-	@When("^user search a particular product like headphones$")
+	@When("^user search a particular product and try to proceed the payment without adding item$")
 	public void user_search_a_particular_product_like_headphones() throws Throwable {
+		 Thread.sleep(1000);
 		 driver.findElement(By.name("products")).sendKeys("Headphone");
 		 driver.findElement(By.xpath("//input[@value='FIND DETAILS']")).click();
-		 
+		 Assert.assertTrue(driver.findElements(By.cssSelector("i.fa.fa-shopping-cart")).size()!=0);
 	}
 
 	@Then("^TestMeApp doesnt display cart icon$")
 	public void testmeapp_doesnt_display_cart_icon() throws Throwable {
-	   if(driver.findElements(By.cssSelector("i.fa.fa-shopping-cart")).size()!=0)
-	   {
-		   System.out.println("PASS");
-	   }
-	   else
-	   {
-		   System.out.println("Payment page doesnt open without clicking on Add to cart");
-		  
-	   }
+	   System.out.println("TestMeApp doesnt display cart icon");
+	   driver.close();
 	}
 }
 

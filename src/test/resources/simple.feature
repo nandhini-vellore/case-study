@@ -38,9 +38,8 @@ Then Application must open in the browser
    
   @Payment
    Scenario: User moves to cart without adding the item
-    Given user registered into TestMeApp
-    When user search a particular product like headphones
-    And try to proceed the payment without adding item
+    Given user is logged in 
+    When user search a particular product and try to proceed the payment without adding item
     Then TestMeApp doesnt display cart icon
  
  
